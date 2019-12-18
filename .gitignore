@@ -1,0 +1,8 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/WebServiceXmlParser/.vs/WebServiceXmlParser/v16
+/WebServiceXmlParser/obj
+/WebServiceXmlParser/bin/Debug/netcoreapp3.0
+/.vs
