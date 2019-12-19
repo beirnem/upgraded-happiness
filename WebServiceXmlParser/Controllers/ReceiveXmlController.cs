@@ -15,9 +15,9 @@ namespace WebServiceXmlParser.Controllers
     public class ReceiveXmlController : ControllerBase
     {
         private readonly ILogger<ReceiveXmlController> _logger;
-        private readonly IParseInputDocument _parseInputDocument;
+        private readonly IParseInputDocumentService _parseInputDocument;
 
-        public ReceiveXmlController(ILogger<ReceiveXmlController> logger, IParseInputDocument parseInputDocument)
+        public ReceiveXmlController(ILogger<ReceiveXmlController> logger, IParseInputDocumentService parseInputDocument)
         {
             _logger = logger;
             _parseInputDocument = parseInputDocument;
