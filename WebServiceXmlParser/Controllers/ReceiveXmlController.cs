@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -25,9 +26,13 @@ namespace WebServiceXmlParser.Controllers
         }
 
         // GET: api/ReceiveXml
-        [HttpGet]
-        public async Task<IActionResult> Get(string xmlDoc)
+
+        // POST: api/ReceiveXml
+        [HttpPost]
+        [ActionName("XMLMethod")]
+        public async Task<IActionResult> Get([FromBody]object value)
         {
+            var xmlDoc = (XmlDocument)value;
             var result = await _parseInputDocument.ValidateDocument(xmlDoc);
             switch (result.status)
             {
