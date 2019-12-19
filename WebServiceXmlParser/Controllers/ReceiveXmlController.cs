@@ -34,6 +34,7 @@ namespace WebServiceXmlParser.Controllers
                 case 0:
                     {
                         var message = "Document structured correctly";
+                        _logger.LogInformation(LoggingEvents.ValidStructure, message);
                         return Ok(message);
                     }
                 case -1:
