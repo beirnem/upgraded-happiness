@@ -34,7 +34,7 @@ namespace WebServiceXmlParser.Controllers
         {
             var xmlDoc = (XmlDocument)value;
             var result = await _parseInputDocument.ValidateDocument(xmlDoc);
-            switch (result.status)
+            switch (result.Status)
             {
                 case 0:
                     {
@@ -45,13 +45,13 @@ namespace WebServiceXmlParser.Controllers
                 case -1:
                     {
                         var errorMessage = "Invalid Declaration Command specified";
-                        _logger.LogError(LoggingEvents.InvalidCommand, errorMessage, result.message);
+                        _logger.LogError(LoggingEvents.InvalidCommand, errorMessage, result.Message);
                         return StatusCode(422, errorMessage);
                     }
                 case -2:
                     {
                         var errorMessage = "Invalid Site specified";
-                        _logger.LogError(LoggingEvents.InvalidSite, "Invalid Site specified", result.message);
+                        _logger.LogError(LoggingEvents.InvalidSite, "Invalid Site specified", result.Message);
                         return StatusCode(422, errorMessage);
                     }
                 default:
