@@ -21,8 +21,6 @@ namespace WebServiceXmlParser.Controllers
 
         }
 
-        // GET: api/ReceiveXml
-
         // POST: api/ReceiveXml
         [HttpPost]
         [ActionName("XMLMethod")]
