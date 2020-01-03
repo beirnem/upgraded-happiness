@@ -25,7 +25,7 @@ The webservice should respond with a status code which is based on parsing the c
 
 a.	If the XML document is given here is passed then return a status of `0` – which means the document was structured correctly.
 
-b.	If the Declararation’s Command <> `DEFAULT` then return `-1` – which means invalid command specified.
+b.	If the `<Declararation Command>` `DEFAULT` then return `-1` – which means invalid command specified.
 
-c.	If the SiteID <> `DUB` then return `-2` – invalid Site specified.
+c.	If the `<SiteID>` `DUB` then return `-2` – invalid Site specified.
 
