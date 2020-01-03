@@ -28,12 +28,12 @@ namespace WebServiceXmlParser
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSingleton<ILogger>();
+            services.AddSingleton(typeof(ILogger<>), typeof(Logger<>));
             services.AddTransient<IParseInputDocumentService, ParseInputDocumentService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
             if (env.IsDevelopment())
             {
@@ -49,6 +49,16 @@ namespace WebServiceXmlParser
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.Use(next =>
+            {
+                return async context =>
+                {
+                    logger.LogInformation("Incoming request");
+                    await next(context);
+                    logger.LogInformation("Outgoing response");
+                };
             });
         }
     }
