@@ -30,10 +30,10 @@ namespace WebServiceXmlParser.Controllers
         // POST: api/ReceiveXml
         [HttpPost]
         [ActionName("XMLMethod")]
-        public async Task<IActionResult> Get([FromBody]object value)
+        public async Task<IActionResult> Post([FromBody]object value)
         {
             var xmlDoc = (XmlDocument)value;
-            var result = await _parseInputDocument.ValidateDocument(xmlDoc);
+            var result = _parseInputDocument.ValidateDocument(xmlDoc);
             switch (result.Status)
             {
                 case 0:

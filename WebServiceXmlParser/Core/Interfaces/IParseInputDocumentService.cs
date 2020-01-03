@@ -6,6 +6,6 @@ namespace WebServiceXmlParser.Core.Interfaces
 {
     public interface IParseInputDocumentService
     {
-        public Task<DocumentParseResult> ValidateDocument(XmlDocument xmlDocument);
+        public DocumentParseResult ValidateDocument(XmlDocument xmlDocument);
     }
 }

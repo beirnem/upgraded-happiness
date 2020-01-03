@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Schema;
 using WebServiceXmlParser.Core.Interfaces;
@@ -16,27 +13,60 @@ namespace WebServiceXmlParser.Services
         /// </summary>
         /// <param name="xmlDocument"></param>
         /// <returns></returns>
-        public async Task<DocumentParseResult> ValidateDocument(XmlDocument xmlDocument)
+        public DocumentParseResult ValidateDocument(XmlDocument xmlDocument)
         {
             // 
-            XmlSchemaSet schemas = new XmlSchemaSet();
-            schemas.Add("", new XmlTextReader("../Core/InputDocumentSchema.xsd"));
-            xmlDocument.Validate(InputDocumentValidationEventHandler);
-            if (xmlDocument.DocumentElement.InnerText != "InputDocument")
-            { 
-                return new DocumentParseResult()
+            try
+            {
+                // Verify that the document structure is correct.
+                XmlSchemaSet schemas = new XmlSchemaSet();
+                schemas.Add("", new XmlTextReader("../Core/InputDocumentSchema.xsd"));
+                xmlDocument.Validate(InputDocumentValidationEventHandler); // need to use the output from this
+
+                if (xmlDocument.FirstChild.InnerText != "InputDocument")
                 {
-                    Status = -5,
-                    Message = "Invalid document structure"
-                }; ;
+                    return new DocumentParseResult()
+                    {
+                        Status = -5,
+                        Message = "Invalid document structure"
+                    };
+
+                }
+
+                // Check question part b
+                // Verify that the Declaration element has the correct Command attribute
+                if (xmlDocument.GetElementById("Declaration").HasAttribute("Command") 
+                    && xmlDocument.GetElementById("Declaration").GetAttribute("Command") != "DEFAULT")
+                {
+                    return new DocumentParseResult()
+                    {
+                        Status = -1,
+                        Message = "Invalid command specified"
+                    };
+                }
+
+                // Check question part c
+                // Verify that the Site ID element has the correct Value
+                if (xmlDocument.GetElementById("SiteID").InnerText != "DUB")
+                {
+                    return new DocumentParseResult()
+                    {
+                        Status = -2,
+                        Message = "Invalid site specified"
+                    };
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
 
-            // Verify that the document structure is correct.
-
-            // Verify that the Declaration element has the correct Command attribute
-
-            // Verify that the Site ID element has the correct Value
-            
+            return new DocumentParseResult()
+            {
+                Status = 0,
+                Message = "Document is structured correctly"
+            };
         }
 
         private void InputDocumentValidationEventHandler(object sender, ValidationEventArgs e)
@@ -51,8 +81,6 @@ namespace WebServiceXmlParser.Services
                 Console.Write("ERROR: ");
                 Console.WriteLine(e.Message);
             }
-
         }
-
     }
 }
